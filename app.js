@@ -38,7 +38,7 @@ app.post("/upload", upload.single("file"), async (req, res) => {
 let sum = 0;
 for (let index = 0; index < 20; index++) {
   let start = Date.now();
-  await processEpub("./book1.epub");
+  await processEpub("./public/book1.epub");
   let end = Date.now(); // 完成
   console.log(`The loop took ${end - start} ms`);
   sum += end - start;
