@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
 
 const corsOptions = {
   origin: "*",
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  optionsSuccessStatus: 200,
 };
 
 const upload = multer({ storage });
@@ -30,20 +30,20 @@ app.use(cors(corsOptions));
 app.post("/upload", upload.single("file"), async (req, res) => {
   let start = Date.now();
   let result = await processEpub(req.file.path);
-  let end = Date.now(); // 完成
+  let end = Date.now();
   console.log(`The loop took ${end - start} ms`);
   res.json(result);
 });
 
-// let sum = 0;
-// for (let index = 0; index < 20; index++) {
-//   let start = Date.now();
-//   await processEpub("./public/book1.epub");
-//   let end = Date.now(); // 完成
-//   console.log(`The loop took ${end - start} ms`);
-//   sum += end - start;
-// }
-// console.log("average:", sum / 20);
+let sum = 0;
+for (let index = 0; index < 20; index++) {
+  let start = Date.now();
+  await processEpub("./public/book.epub");
+  let end = Date.now();
+  console.log(`The loop took ${end - start} ms`);
+  sum += end - start;
+}
+console.log("average:", sum / 20);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

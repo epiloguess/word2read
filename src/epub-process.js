@@ -1,6 +1,6 @@
 import { parseEpub } from "@gxl/epub-parser";
 import nlp from "compromise";
-import { cocaMap, stopwordsMap } from "./coca.js";
+import { cocaMap } from "./coca.js";
 
 function getCocaRank(word) {
   if (cocaMap.has(word)) {
