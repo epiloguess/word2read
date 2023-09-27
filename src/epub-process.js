@@ -3,10 +3,7 @@ import nlp from "compromise";
 import { cocaMap } from "./coca.js";
 
 function getCocaRank(word) {
-  if (cocaMap.has(word)) {
-    return cocaMap.get(word).index + 1;
-  }
-  return 0;
+  return cocaMap.has(word) ? cocaMap.get(word).index + 1 : 0;
 }
 
 function contentRegex(content) {
