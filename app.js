@@ -5,7 +5,7 @@ import { processEpub } from "./src/epub-process.js";
 import cors from "cors";
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 // 配置 multer 中间件
 const storage = multer.diskStorage({
@@ -35,15 +35,15 @@ app.post("/upload", upload.single("file"), async (req, res) => {
   res.json(result);
 });
 
-let sum = 0;
-for (let index = 0; index < 20; index++) {
-  let start = Date.now();
-  await processEpub("./public/book1.epub");
-  let end = Date.now(); // 完成
-  console.log(`The loop took ${end - start} ms`);
-  sum += end - start;
-}
-console.log("average:", sum / 20);
+// let sum = 0;
+// for (let index = 0; index < 20; index++) {
+//   let start = Date.now();
+//   await processEpub("./public/book1.epub");
+//   let end = Date.now(); // 完成
+//   console.log(`The loop took ${end - start} ms`);
+//   sum += end - start;
+// }
+// console.log("average:", sum / 20);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
