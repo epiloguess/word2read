@@ -1,4 +1,5 @@
 import express from "express";
+import { diskStorage } from "multer";
 import multer from "multer";
 import { processEpub } from "./src/epub-process.js";
 import cors from "cors";
@@ -7,7 +8,7 @@ const app = express();
 const port = 3001;
 
 // 配置 multer 中间件
-const storage = multer.diskStorage({
+const storage = diskStorage({
   destination: (req, file, cb) => {
     // 指定上传文件保存的目录
     cb(null, "./uploads/");
@@ -38,7 +39,7 @@ app.post("/upload", upload.single("file"), async (req, res) => {
 // let sum = 0;
 // for (let index = 0; index < 20; index++) {
 //   let start = Date.now();
-//   await processEpub("./public/book.epub");
+// await processEpub("./public/book.epub");
 //   let end = Date.now();
 //   console.log(`The loop took ${end - start} ms`);
 //   sum += end - start;
