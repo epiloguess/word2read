@@ -1,10 +1,7 @@
 import fs from "node:fs";
 
 const readFileLines = (filename: string) =>
-  fs
-    .readFileSync(filename)
-    .toString("UTF8" as BufferEncoding)
-    .split("\r\n");
+  fs.readFileSync(filename).toString("utf8").split("\r\n");
 
 export let cocaMap = new Map();
 

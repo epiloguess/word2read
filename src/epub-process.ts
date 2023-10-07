@@ -7,7 +7,20 @@ function getCocaRank(word: string) {
 }
 
 function contentRegex(content) {
-  return content.replace(/[()#\[*]/g, "").replace(/\]/g, ".");
+  return (
+    content
+      // .replace(/[\u4e00-\u9fa5]/g, "")
+      // .replace(/\d+\./g, "")
+      // .replace(/[\r\n]+/g, "")
+      // .replace(/\./g, ". \r\n")
+      // .replace(/\[[^\]]+\]/g, "")
+      // .replace(/[•_()#*]/g, "")
+      // .replace(/\.{3}/g, "")
+      // .replace(/\[\w+\]/g, "")
+      // .replace(/\d+\./g, "")
+      // .replace(/\]/g, ".");
+      .replace(/<[^>]+>/g, "")
+  );
 }
 
 function processSentence(sentence, stemedMap, level) {
@@ -18,7 +31,6 @@ function processSentence(sentence, stemedMap, level) {
   for (const term of sentence.terms) {
     let stemed = term.root || term.normal;
     let rank = getCocaRank(stemed);
-
     if (rank > 0) {
       if (!stemedMap.has(stemed)) {
         stemedMap.set(stemed, {
@@ -32,14 +44,12 @@ function processSentence(sentence, stemedMap, level) {
       const obj = stemedMap.get(stemed);
       obj.tokens.add(term.text);
       obj.count++;
-      if (sentence.terms.length > 5) {
-        obj.examples.set(sentence.text, rankCount);
-      }
+      // if (sentence.terms.length > 3) {
+      obj.examples.set(sentence.text, rankCount);
+      // }
     }
   }
 }
-
-let wordsCount: number;
 
 interface stemedMapValue {
   stemed: string;
@@ -60,7 +70,6 @@ function stemedMapToObjArray(stemedMap: Map<string, stemedMapValue>) {
     }
     return obj;
   }).sort((a, b) => a.rank - b.rank);
-  wordsCount = objectArray.reduce((sum, term) => sum + term.count, 0);
   return objectArray;
 }
 
@@ -77,6 +86,6 @@ export async function processEpub(filePath: string, level = 4000) {
       processSentence(sentence, stemedMap, level);
     }
   }
-  console.log(wordsCount);
+
   return stemedMapToObjArray(stemedMap);
 }
