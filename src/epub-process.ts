@@ -18,7 +18,6 @@ function contentRegex(content) {
       // .replace(/\.{3}/g, "")
       // .replace(/\[\w+\]/g, "")
       // .replace(/\d+\./g, "")
-      // .replace(/\]/g, ".");
       .replace(/<[^>]+>/g, "")
   );
 }
